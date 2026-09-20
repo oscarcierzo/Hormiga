@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
 <title>HormigaTok 🐜</title>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23000%22/%3E%3Ctext y=%2265%22 x=%2250%22 font-size=%2250%22 text-anchor=%22middle%22%3E🐜%3C/text%3E%3C/svg%3E">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -90,6 +90,44 @@ button, [role="button"], input[type="submit"] { cursor:pointer; -webkit-touch-ca
     <p style="color:#71717a;font-size:12px;text-align:center;margin-bottom:20px;line-height:1.5;">Borrará TODOS los gastos, deudas, ingresos extra y rachas. Irreversible.</p>
     <div id="rBox" style="margin-bottom:12px;"></div>
     <button onclick="closeR()" class="ios-btn" style="width:100%;background:#27272a;color:#a1a1aa;font-weight:700;padding:14px;border-radius:14px;border:none;font-size:14px;">Cancelar</button>
+  </div>
+</div>
+
+<div id="modalResumen" class="modal" onclick="if(event.target===this)closeResumen()">
+  <div style="background:#0a0a0a;border:1px solid #27272a;border-radius:24px;padding:24px;width:100%;max-width:340px;max-height:85vh;overflow-y:auto;">
+    <h3 style="font-size:18px;font-weight:900;text-align:center;margin-bottom:2px;" class="shimmer">📊 RESUMEN</h3>
+    <p id="resSubtitulo" style="text-align:center;color:#71717a;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:16px;">MES</p>
+    <svg viewBox="0 0 520 300" style="width:100%;height:auto;margin-bottom:12px;">
+      <line x1="0" y1="240" x2="520" y2="240" stroke="#27272a" stroke-width="2"/>
+      <rect id="resRectSaldo" x="30" y="240" width="95" height="0" rx="10" fill="#FFD700" opacity="0.9"/>
+      <rect id="resRectGasto" x="165" y="240" width="95" height="0" rx="10" fill="#f97316" opacity="0.9"/>
+      <rect id="resRectDeuda" x="300" y="240" width="95" height="0" rx="10" fill="#f87171" opacity="0.9"/>
+      <rect id="resRectIngreso" x="435" y="240" width="95" height="0" rx="10" fill="#34d399" opacity="0.9"/>
+      <text id="resTxtSaldo" x="77" y="230" text-anchor="middle" fill="#FFD700" font-size="14" font-weight="900" font-family="monospace">0 €</text>
+      <text id="resTxtGasto" x="212" y="230" text-anchor="middle" fill="#f97316" font-size="14" font-weight="900" font-family="monospace">0 €</text>
+      <text id="resTxtDeuda" x="347" y="230" text-anchor="middle" fill="#f87171" font-size="14" font-weight="900" font-family="monospace">0 €</text>
+      <text id="resTxtIngreso" x="482" y="230" text-anchor="middle" fill="#34d399" font-size="14" font-weight="900" font-family="monospace">0 €</text>
+      <text x="77" y="262" text-anchor="middle" fill="#a1a1aa" font-size="10" font-weight="700">Margen</text>
+      <text x="212" y="262" text-anchor="middle" fill="#a1a1aa" font-size="10" font-weight="700">Gasto mes</text>
+      <text x="347" y="262" text-anchor="middle" fill="#a1a1aa" font-size="10" font-weight="700">Deudas</text>
+      <text x="482" y="262" text-anchor="middle" fill="#a1a1aa" font-size="10" font-weight="700">Ingresos</text>
+    </svg>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
+      <div style="background:rgba(39,39,42,0.4);border:1px solid #27272a;border-radius:14px;padding:14px;text-align:center;"><div style="font-size:9px;color:#71717a;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;">Margen Restante</div><div id="resCardSaldo" style="font-size:18px;font-weight:900;font-family:monospace;margin-top:6px;color:#FFD700;">0.00 €</div></div>
+      <div style="background:rgba(39,39,42,0.4);border:1px solid #27272a;border-radius:14px;padding:14px;text-align:center;"><div style="font-size:9px;color:#71717a;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;">Gasto del Mes</div><div id="resCardGasto" style="font-size:18px;font-weight:900;font-family:monospace;margin-top:6px;color:#f97316;">0.00 €</div></div>
+      <div style="background:rgba(39,39,42,0.4);border:1px solid #27272a;border-radius:14px;padding:14px;text-align:center;"><div style="font-size:9px;color:#71717a;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;">Deuda Total</div><div id="resCardDeuda" style="font-size:18px;font-weight:900;font-family:monospace;margin-top:6px;color:#f87171;">0.00 €</div></div>
+      <div style="background:rgba(39,39,42,0.4);border:1px solid #27272a;border-radius:14px;padding:14px;text-align:center;"><div style="font-size:9px;color:#71717a;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;">Ingresos Extra</div><div id="resCardIngreso" style="font-size:18px;font-weight:900;font-family:monospace;margin-top:6px;color:#34d399;">0.00 €</div></div>
+    </div>
+    <div style="border-top:1px solid #27272a;padding-top:16px;">
+      <p style="color:#71717a;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">⚙️ Acciones</p>
+      <button id="resBackup" class="ios-btn" style="width:100%;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#34d399;font-weight:700;padding:14px;border-radius:16px;border:none;font-size:12px;margin-bottom:8px;">📥 COPIA DE SEGURIDAD</button>
+      <input type="file" id="resInputRestore" accept=".csv,text/csv" style="display:none;">
+      <button id="resRestore" class="ios-btn" style="width:100%;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.25);color:#60a5fa;font-weight:700;padding:14px;border-radius:16px;border:none;font-size:12px;margin-bottom:8px;">🔄 RESTAURAR COPIA</button>
+      <button id="resPrint" class="ios-btn" style="width:100%;background:rgba(161,161,170,0.1);border:1px solid rgba(161,161,170,0.25);color:#d4d4d8;font-weight:700;padding:14px;border-radius:16px;border:none;font-size:12px;margin-bottom:8px;">🖨️ IMPRIMIR PDF DEL MES</button>
+      <button id="resResetMes" class="ios-btn" style="width:100%;background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.25);color:#fbbf24;font-weight:700;padding:14px;border-radius:16px;border:none;font-size:12px;margin-bottom:8px;">📅 REINICIAR SOLO ESTE MES</button>
+      <button id="resResetTotal" class="ios-btn" style="width:100%;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#f87171;font-weight:700;padding:14px;border-radius:16px;border:none;font-size:12px;margin-bottom:14px;">🗑️ RESET TOTAL</button>
+    </div>
+    <button onclick="closeResumen()" class="ios-btn" style="width:100%;background:#27272a;color:#fff;font-weight:700;padding:14px;border-radius:14px;border:none;font-size:14px;">Cerrar</button>
   </div>
 </div>
 
@@ -409,6 +447,42 @@ const gastoSemanaEl=document.getElementById('gastoSemana');
 const barMaxEl=document.getElementById('barMax');
 const tipEl=document.getElementById('tip');
 const slides=document.querySelectorAll('.slide');
+
+// ══════════════════════════════════════════════════════════════
+// 4b. FIX: teclado móvil vs scroll-snap
+//     Con "scroll-snap-type:mandatory" activo, el ajuste automático
+//     que hace el navegador para mostrar un input por encima del
+//     teclado se interpreta como un gesto de scroll y el snap lo
+//     "corrige" saltando a la pantalla más cercana. Por eso al tocar
+//     un campo parecía cambiar de pantalla y/o el teclado tapaba el
+//     campo. Solución: desactivar el snap mientras hay un campo
+//     enfocado, y forzar que ese campo quede visible por encima del
+//     teclado.
+// ══════════════════════════════════════════════════════════════
+let camposEnfocados=0;
+document.addEventListener('focusin',function(e){
+  if(!e.target.matches('input,select,textarea'))return;
+  camposEnfocados++;
+  app.style.scrollSnapType='none';
+  setTimeout(function(){
+    e.target.scrollIntoView({block:'center',behavior:'smooth'});
+  },300);
+});
+document.addEventListener('focusout',function(e){
+  if(!e.target.matches('input,select,textarea'))return;
+  camposEnfocados=Math.max(0,camposEnfocados-1);
+  setTimeout(function(){
+    if(camposEnfocados===0)app.style.scrollSnapType='y mandatory';
+  },100);
+});
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize',function(){
+    const tecladoAbierto=(window.innerHeight-window.visualViewport.height)>150;
+    document.querySelectorAll('.modal.on').forEach(function(m){
+      m.style.alignItems=tecladoAbierto?'flex-start':'center';
+    });
+  });
+}
 
 // ══════════════════════════════════════════════════════════════
 // 5. UTILIDADES GENERALES
@@ -892,102 +966,48 @@ function restaurarCSV(file){
 window.restaurarCSV=restaurarCSV;
 
 // ══════════════════════════════════════════════════════════════
-// 17. VENTANA "RESUMEN" (gráfico de barras + acciones, en popup)
-//     Usa window.opener para leer/escribir datos de la app principal
+// 17. MODAL "RESUMEN" (gráfico de barras + acciones)
+//     Antes se abría en una ventana emergente (window.open); ahora
+//     es un modal dentro de la misma página: no rompe el botón
+//     "atrás" del móvil ni depende de que el navegador permita popups.
 // ══════════════════════════════════════════════════════════════
+function renderResumen(){
+  const d=getResumenData();
+  document.getElementById('resSubtitulo').textContent=d.mesNombre+' '+d.anio;
+  const vals={saldo:d.saldo,gasto:d.totalG,deuda:d.totalDeuda,ingreso:d.totalIngreso};
+  const maxVal=Math.max(Math.abs(vals.saldo),Math.abs(vals.gasto),Math.abs(vals.deuda),Math.abs(vals.ingreso),1);
+  const maxH=190,baseY=240;
+  ['saldo','gasto','deuda','ingreso'].forEach(function(k){
+    const cap=k.charAt(0).toUpperCase()+k.slice(1);
+    const h=Math.max((Math.abs(vals[k])/maxVal)*maxH,4);
+    const rect=document.getElementById('resRect'+cap);
+    rect.setAttribute('height',h);
+    rect.setAttribute('y',baseY-h);
+    const txt=document.getElementById('resTxt'+cap);
+    txt.setAttribute('y',baseY-h-10);
+    txt.textContent=vals[k].toFixed(2)+' €';
+    document.getElementById('resCard'+cap).textContent=vals[k].toFixed(2)+' €';
+  });
+}
+
 function abrirResumen(){
-  const w=window.open('','_blank');
-  if(!w){alert('El navegador ha bloqueado la ventana emergente. Permite las ventanas emergentes para ver el resumen.');return;}
-  const html='<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">'
-    +'<meta name="viewport" content="width=device-width, initial-scale=1">'
-    +'<title>Resumen — HormigaTok</title><style>'
-    +'*{box-sizing:border-box;}'
-    +'body{margin:0;background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:28px 18px 40px;}'
-    +'.wrap{max-width:520px;margin:0 auto;}'
-    +'h1{font-size:20px;font-weight:900;margin:0 0 2px;text-align:center;}'
-    +'p.sub{color:#71717a;font-size:12px;margin:0 0 20px;text-align:center;}'
-    +'.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0 32px;}'
-    +'.card{background:rgba(39,39,42,0.4);border:1px solid #27272a;border-radius:14px;padding:14px;text-align:center;}'
-    +'.card .lbl{font-size:9px;color:#71717a;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;}'
-    +'.card .val{font-size:18px;font-weight:900;font-family:monospace;margin-top:6px;}'
-    +'.divider{height:1px;background:#27272a;margin:32px 0 20px;}'
-    +'h2.section{font-size:12px;color:#71717a;font-weight:900;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}'
-    +'button.act{width:100%;padding:14px;border-radius:16px;border:none;font-weight:700;font-size:12px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;}'
-    +'.btn-backup{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#34d399;}'
-    +'.btn-restore{background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.25);color:#60a5fa;}'
-    +'.btn-print{background:rgba(161,161,170,0.1);border:1px solid rgba(161,161,170,0.25);color:#d4d4d8;}'
-    +'.btn-resetmes{background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.25);color:#fbbf24;}'
-    +'.btn-resettotal{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#f87171;}'
-    +'#err{display:none;text-align:center;color:#f87171;font-size:13px;margin-top:40px;}'
-    +'</style></head><body><div class="wrap">'
-    +'<h1>📊 Resumen</h1><p class="sub" id="subtitulo">HormigaTok</p>'
-    +'<svg id="chart" viewBox="0 0 520 300" style="width:100%;height:auto;">'
-    +'<line x1="0" y1="240" x2="520" y2="240" stroke="#27272a" stroke-width="2"/>'
-    +'<rect id="rect-saldo" x="30" y="240" width="95" height="0" rx="10" fill="#FFD700" opacity="0.9"/>'
-    +'<rect id="rect-gasto" x="165" y="240" width="95" height="0" rx="10" fill="#f97316" opacity="0.9"/>'
-    +'<rect id="rect-deuda" x="300" y="240" width="95" height="0" rx="10" fill="#f87171" opacity="0.9"/>'
-    +'<rect id="rect-ingreso" x="435" y="240" width="95" height="0" rx="10" fill="#34d399" opacity="0.9"/>'
-    +'<text id="txt-saldo" x="77" y="230" text-anchor="middle" fill="#FFD700" font-size="14" font-weight="900" font-family="monospace">0 €</text>'
-    +'<text id="txt-gasto" x="212" y="230" text-anchor="middle" fill="#f97316" font-size="14" font-weight="900" font-family="monospace">0 €</text>'
-    +'<text id="txt-deuda" x="347" y="230" text-anchor="middle" fill="#f87171" font-size="14" font-weight="900" font-family="monospace">0 €</text>'
-    +'<text id="txt-ingreso" x="482" y="230" text-anchor="middle" fill="#34d399" font-size="14" font-weight="900" font-family="monospace">0 €</text>'
-    +'<text x="77" y="262" text-anchor="middle" fill="#a1a1aa" font-size="10" font-weight="700">Margen</text>'
-    +'<text x="212" y="262" text-anchor="middle" fill="#a1a1aa" font-size="10" font-weight="700">Gasto mes</text>'
-    +'<text x="347" y="262" text-anchor="middle" fill="#a1a1aa" font-size="10" font-weight="700">Deudas</text>'
-    +'<text x="482" y="262" text-anchor="middle" fill="#a1a1aa" font-size="10" font-weight="700">Ingresos</text>'
-    +'</svg>'
-    +'<div class="cards">'
-    +'<div class="card"><div class="lbl">Margen Restante</div><div class="val" id="card-saldo" style="color:#FFD700;">0.00 €</div></div>'
-    +'<div class="card"><div class="lbl">Gasto del Mes</div><div class="val" id="card-gasto" style="color:#f97316;">0.00 €</div></div>'
-    +'<div class="card"><div class="lbl">Deuda Total</div><div class="val" id="card-deuda" style="color:#f87171;">0.00 €</div></div>'
-    +'<div class="card"><div class="lbl">Ingresos Extra</div><div class="val" id="card-ingreso" style="color:#34d399;">0.00 €</div></div>'
-    +'</div>'
-    +'<div class="divider"></div><h2 class="section">⚙️ Acciones</h2>'
-    +'<button class="act btn-backup" id="bBackup">📥 COPIA DE SEGURIDAD</button>'
-    +'<input type="file" id="iRestore" accept=".csv,text/csv" style="display:none;">'
-    +'<button class="act btn-restore" id="bRestore">🔄 RESTAURAR COPIA</button>'
-    +'<button class="act btn-print" id="bPrint">🖨️ IMPRIMIR PDF DEL MES</button>'
-    +'<button class="act btn-resetmes" id="bResetMes">📅 REINICIAR SOLO ESTE MES</button>'
-    +'<button class="act btn-resettotal" id="bResetTotal">🗑️ RESET TOTAL</button>'
-    +'<p id="err">⚠️ Se ha perdido la conexión con HormigaTok. Cierra esta ventana y vuelve a abrirla desde la app.</p>'
-    +'</div>'
-    +'<script>'
-    +'function render(){'
-    +'  var op=window.opener;'
-    +'  if(!op||op.closed){document.getElementById("err").style.display="block";return;}'
-    +'  var d=op.getResumenData();'
-    +'  document.getElementById("subtitulo").textContent=d.mesNombre+" "+d.anio;'
-    +'  var vals={saldo:d.saldo,gasto:d.totalG,deuda:d.totalDeuda,ingreso:d.totalIngreso};'
-    +'  var maxVal=Math.max(Math.abs(vals.saldo),Math.abs(vals.gasto),Math.abs(vals.deuda),Math.abs(vals.ingreso),1);'
-    +'  var maxH=190,baseY=240;'
-    +'  ["saldo","gasto","deuda","ingreso"].forEach(function(k){'
-    +'    var h=Math.max((Math.abs(vals[k])/maxVal)*maxH,4);'
-    +'    var rect=document.getElementById("rect-"+k);'
-    +'    rect.setAttribute("height",h);'
-    +'    rect.setAttribute("y",baseY-h);'
-    +'    var txt=document.getElementById("txt-"+k);'
-    +'    txt.setAttribute("y",baseY-h-10);'
-    +'    txt.textContent=vals[k].toFixed(2)+" €";'
-    +'    document.getElementById("card-"+k).textContent=vals[k].toFixed(2)+" €";'
-    +'  });'
-    +'}'
-    +'window.addEventListener("focus",render);'
-    +'render();'
-    +'document.getElementById("bBackup").addEventListener("click",function(){if(window.opener)window.opener.exportCSV();});'
-    +'document.getElementById("bRestore").addEventListener("click",function(){document.getElementById("iRestore").click();});'
-    +'document.getElementById("iRestore").addEventListener("change",function(){'
-    +'  if(this.files&&this.files[0]&&window.opener){window.opener.focus();window.opener.restaurarCSV(this.files[0]);setTimeout(render,300);}'
-    +'  this.value="";'
-    +'});'
-    +'document.getElementById("bPrint").addEventListener("click",function(){if(window.opener){window.opener.focus();window.opener.imprimirMes();}});'
-    +'document.getElementById("bResetMes").addEventListener("click",function(){if(window.opener){window.opener.focus();window.opener.resetMes();setTimeout(render,300);}});'
-    +'document.getElementById("bResetTotal").addEventListener("click",function(){if(window.opener){window.opener.focus();window.opener.openR();}});'
-    +'<\/script></body></html>';
-  w.document.open();
-  w.document.write(html);
-  w.document.close();
+  renderResumen();
+  document.getElementById('modalResumen').classList.add('on');
 }
 window.abrirResumen=abrirResumen;
+window.closeResumen=function(){document.getElementById('modalResumen').classList.remove('on');};
+
+document.getElementById('resBackup').addEventListener('click',exportCSV);
+document.getElementById('resRestore').addEventListener('click',function(){document.getElementById('resInputRestore').click();});
+document.getElementById('resInputRestore').addEventListener('change',function(){
+  if(this.files&&this.files[0]){restaurarCSV(this.files[0]);setTimeout(renderResumen,300);}
+  this.value='';
+});
+document.getElementById('resPrint').addEventListener('click',imprimirMes);
+document.getElementById('resResetMes').addEventListener('click',function(){resetMes();renderResumen();});
+document.getElementById('resResetTotal').addEventListener('click',function(){closeResumen();openR();});
+
+
 
 // ══════════════════════════════════════════════════════════════
 // 18. INICIALIZACIÓN
